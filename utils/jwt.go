@@ -2,6 +2,7 @@ package utils
 
 import (
 	"errors"
+	"fmt"
 	"log"
 	"os"
 	"strings"
@@ -18,7 +19,7 @@ func init() {
 	// Carregar variáveis do .env
 	err := godotenv.Load()
 	if err != nil {
-		panic("Error loading .env")
+		fmt.Println("Sem o arquivo .env")
 	}
 
 	// Obter a chave secreta do .env
@@ -32,8 +33,8 @@ func init() {
 
 // Claims estrutura para armazenar informações no token
 type Claims struct {
-	User  dto.UserDtoResponse `json:"user"`
-	IsRefresh bool   `json:"is_refresh,omitempty"` // Campo para identificar refresh token
+	User      dto.UserDtoResponse `json:"user"`
+	IsRefresh bool                `json:"is_refresh,omitempty"` // Campo para identificar refresh token
 	jwt.StandardClaims
 }
 
@@ -56,7 +57,7 @@ func GenerateRefreshToken(user dto.UserDtoResponse) (string, error) {
 	expirationTime := time.Now().Add(1 * time.Hour)
 
 	claims := &Claims{
-		User:  user,
+		User:      user,
 		IsRefresh: true,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: expirationTime.Unix(),
