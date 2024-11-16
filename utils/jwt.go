@@ -40,7 +40,7 @@ type Claims struct {
 
 // GenerateToken gera um novo token JWT usando HS256
 func GenerateToken(user dto.UserDtoResponse) (string, error) {
-	expirationTime := time.Now().Add(1 * time.Minute)
+	expirationTime := time.Now().Add(1 * time.Hour)
 
 	claims := &Claims{
 		User: user,
