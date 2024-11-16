@@ -1,38 +1,41 @@
-# Etapa 1: Usar a imagem oficial do Go para compilar a aplicação
-FROM golang:1.20-alpine AS build
+# Etapa 1: Usar a imagem oficial do Go 1.22 para compilar a aplicação
+FROM golang:1.22-alpine AS build
 
-# Instalar dependências necessárias para o Air
+# Instalar dependências necessárias
 RUN apk update && apk add --no-cache bash git
 
-# Criar um diretório para a aplicação
+# Criar um diretório de trabalho dentro do contêiner
 WORKDIR /app
 
 # Copiar o arquivo go.mod e go.sum para o contêiner
 COPY go.mod go.sum ./
 
-# Baixar as dependências do Go
+# Rodar go mod tidy para garantir que as dependências estão corretas
 RUN go mod tidy
 
-# Copiar o restante do código da aplicação para o contêiner
+# Baixar as dependências do Go
+RUN go mod download
+
+# Copiar o código fonte para o contêiner
 COPY . .
 
-# Instalar o Air
-RUN go install github.com/cosmtrek/air@latest
+# Compilar o código Go (apontando para o arquivo main.go dentro da pasta cmd)
+RUN go build -o /app/meu-app ./cmd
 
-# Etapa 2: Configuração do ambiente para execução da aplicação com Air
-FROM golang:1.20-alpine
+# Etapa 2: Usar uma imagem mais leve para rodar a aplicação
+FROM alpine:latest
 
-# Instalar dependências do sistema (caso precise de algo mais, como o bash ou outros pacotes)
-RUN apk update && apk add --no-cache bash
+# Instalar dependências mínimas para rodar o binário (como bash, se necessário)
+RUN apk --no-cache add ca-certificates
 
-# Criar um diretório de trabalho dentro do contêiner
+# Definir o diretório de trabalho
 WORKDIR /app
 
-# Copiar os arquivos da etapa de build (binário e código) para a nova imagem
-COPY --from=build /app /app
+# Copiar o binário gerado na etapa de build
+COPY --from=build /app/meu-app /app/meu-app
 
-# Expor a porta em que o servidor Go vai rodar
+# Expor a porta em que a aplicação Go vai rodar
 EXPOSE 8080
 
-# Definir o comando padrão para rodar o Air
-CMD ["air"]
+# Comando para executar a aplicação
+CMD ["/app/meu-app"]
