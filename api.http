@@ -1,0 +1,17 @@
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+    "username": "daniel",
+    "password": "junior123"
+}
+###
+GET http://localhost:8080/ola
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJuYW1lIjoiSm_Do28iLCJzdXJuYW1lIjoiU2lsdmEiLCJwaG9uZSI6IjExOTg3NjU0MzIxIiwiZW1haWwiOiJkYW5pZWxqdW5pb3JAZXhhbXBsZS5jb20iLCJjcGYiOiIxMjM0NTY3ODkwOSIsInVzZXJuYW1lIjoiZGFuaWVsIiwicG9zaXRpb24iOnsiaWQiOjIsIm5hbWUiOiJEZXNlbnZvbHZlZG9yIn19LCJleHAiOjE3Mjc5NTgyNzB9.PWLJe6t6MfmxhK0jxlDf2iZ6nmL3RiA1AQ2UUg_e_XM
+Content-Type: application/json
+
+###
+GET http://localhost:8080/user
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJuYW1lIjoiSm_Do28iLCJzdXJuYW1lIjoiU2lsdmEiLCJwaG9uZSI6IjExOTg3NjU0MzIxIiwiZW1haWwiOiJkYW5pZWxqdW5pb3JAZXhhbXBsZS5jb20iLCJjcGYiOiIxMjM0NTY3ODkwOSIsInVzZXJuYW1lIjoiZGFuaWVsIiwicG9zaXRpb24iOnsiaWQiOjIsIm5hbWUiOiJEZXNlbnZvbHZlZG9yIn19LCJpc19yZWZyZXNoIjp0cnVlLCJleHAiOjE3Mjc5NjE4OTd9.qtVEvPqfz7vV_h2-EPASh-x5UnlbrAfRiJYrOGpeqZk
+Content-Type: application/json
+
